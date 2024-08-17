@@ -1,9 +1,13 @@
+## pipenv
+
+make sure pipenv is installed
+
 ```bash
-python -m venv .venv
-source .venv/Scripts/activate
-python -m pip install -r requirements.txt
+# pip install not adding to PATH on Windows so use module to call it
+python -m pipenv pipenv install --dev
+python -m pipenv run start
 ```
 
-# Issues
+## Issues
 
 [RegexMatchError](https://github.com/pytube/pytube/issues/1954#issuecomment-2218287594)
