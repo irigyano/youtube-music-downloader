@@ -1,0 +1,13 @@
+#!/usr/bin/zsh
+
+# Create the output directory if it doesn't exist
+mkdir -p ./converts
+
+# Loop through all AAC files in the downloads directory
+for file in ./downloads/*.mp3; do
+    # Extract the base name of the file (without extension)
+    base_name=$(basename "$file" .mp3)
+    
+    # Convert the file to MP3 format and save it to the output directory
+    ffmpeg -i "$file" -codec:a libmp3lame -qscale:a 2 "./converts/${base_name}.mp3"
+done
