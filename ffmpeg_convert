@@ -3,11 +3,23 @@
 # Create the output directory if it doesn't exist
 mkdir -p ./converts
 
-# Loop through all AAC files in the downloads directory
+# Ask the user if they want to delete the original files
+read "delete_files?Do you want to delete the original files after conversion? (y/n) "
+
 for file in ./downloads/*.mp3; do
-    # Extract the base name of the file (without extension)
     base_name=$(basename "$file" .mp3)
     
+    # Check if the file has already been converted
+    if [[ -f "./converts/${base_name}.mp3" ]]; then
+        echo "Skipping conversion for ${base_name}.mp3 - already converted."
+        continue
+    fi
+
     # Convert the file to MP3 format and save it to the output directory
-    ffmpeg -i "$file" -codec:a libmp3lame -qscale:a 2 "./converts/${base_name}.mp3"
+    ffmpeg -y -i "$file" -codec:a libmp3lame -qscale:a 2 "./converts/${base_name}.mp3"
+    
+    # Delete the original file if the user chose 'y'
+    if [[ "$delete_files" == "y" ]]; then
+        rm "$file"
+    fi
 done
