@@ -39,4 +39,8 @@ class YtPlaylist:
 
     def download_musics(self):
         for yt in self.yt.videos:
-            self.download_music(yt)
+            try:
+                self.download_music(yt)
+            except Exception as e:
+                print(e)
+                continue
